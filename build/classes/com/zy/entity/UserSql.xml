@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!-- 针对所有实体类对象的映射配置文件
+namespace="com.java.mybatis":针对该包下的所以实体类对象映射配置文件 -->
+<!--com.web.mapper.IUserMapper
+	public List<User> SelectUsers(int id) ;-->
+<mapper namespace="com.zy.mapper.IUserMapper">
+  <!-- ResutltSet rs=db.executeQuery();
+       while(rs.next()){
+          int uid=rs.getInt("uid");
+       } 
+     一个表，对应 一个java类，那么此处就对应一个resultMap配置   
+    -->
+    
+    
+    
+   <resultMap id="UsersResult" type="com.zy.entity.User">
+      <id column="uid" property="uid" jdbcType="INTEGER" javaType="Integer" />
+      <result column="uname" property="uname" jdbcType="VARCHAR" javaType="string" />
+      <result column="upwd" property="upwd" jdbcType="VARCHAR" javaType="string" />
+      <result column="uage" property="uage" jdbcType="INTEGER" javaType="Integer" />
+      <result column="utest" property="utest" jdbcType="VARCHAR" javaType="string" />
+      <result column="d_id" property="d_id" jdbcType="INTEGER" javaType="INTEGER" />
+      <result column="uimg" property="uimg" jdbcType="VARCHAR" javaType="string" />
+      <result column="udate" property="udate" jdbcType="VARCHAR" javaType="string" />
+      <association property="depts" javaType="com.zy.entity.Detps" resultMap="DeptsResult" ></association> 
+    </resultMap>
+    <resultMap id="DeptsResult" type="com.zy.entity.Detps">
+      <id column="did" property="did" jdbcType="INTEGER" javaType="INTEGER"/>
+      <result column="dname" property="dname" jdbcType="VARCHAR" javaType="string"/>
+      <result column="dtime" property="dtime" jdbcType="VARCHAR" javaType="string"/>
+      <result column="dtest" property="dtest" jdbcType="VARCHAR" javaType="string"/>
+    </resultMap>
+    
+
+    
+	<!-- 动态sql -->
+	<select id="SelectUserAndDepts" resultMap="UsersResult"
+		parameterType="com.zy.entity.User">
+		SELECT u.*,d.* 
+		FROM user u,dept d 
+		where u.d_id = d.did
+		<if test="uid != null">
+		and u.uid > #{uid}
+		</if>
+		<if test="uname != null">
+		and uname like #{uname}
+		</if>
+		order by u.uid
+	</select>
+    	<!-- 动态sql -->
+	<select id="SelectUsersByObject" resultMap="UsersResult"
+		parameterType="com.zy.entity.User">
+		SELECT u.*,d.* 
+		FROM user u,dept d 
+		where u.d_id = d.did
+		<if test="uid != null">
+		and u.uid > #{uid}
+		</if>
+		<if test="uname != null">
+		and uname like #{uname}
+		</if>
+		order by u.uid limit #{currepage},#{pagesize}
+	</select>
+    <select id="getUserCount" resultType="int" parameterType="com.zy.entity.User">
+    select count(*) from user u,dept d
+    where u.d_id = d.did
+    <if test="uid != null">
+    and u.uid > #{uid}
+    </if>
+    <if test="uname != null">
+	and uname like #{uname}
+	</if>
+	order by u.uid
+    </select>
+    <select id="getUserByid" resultMap="UsersResult"
+        parameterType="int">
+       SELECT u.*,d.* from user u,dept d 
+      where u.d_id = d.did and u.uid = #{1}
+    </select>
+      <select id="SearchDeptsList" resultMap="DeptsResult">
+    SELECT did,dname from dept
+    </select>
+    <update id="UpdateSubtable" parameterType="com.zy.entity.User" >
+    	update user set uname = #{uname},uage = #{uage},upwd = #{upwd},d_id = #{d_id},utest = #{utest} where uid = #{uid}    	
+    </update>
+    <insert id="InsertUser" parameterType="com.zy.entity.User" >
+    	INSERT INTO user VALUES (null,#{uname},#{upwd},#{uage},NOW(),null,#{d_id},#{utest})
+    </insert>
+    
+    
+    
+    
+</mapper>

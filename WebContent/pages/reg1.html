@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery-3.1.1.js" ></script>
+		<script>
+			$(document).ready(function(){
+				$("#usn").blur(function(){
+					if($(this).val()==""){
+						$("#usnspan").html("<font color='red'>用户名不能为null</font>");
+//						document.getElementById("usnspan").innerHTML="...."
+					}else if($(this).val().length<4){
+						$("#usnspan").html("<font color='red'>用户名长度>=4</font>");
+					}else{
+						$("#usnspan").html("<font color='green'>OK</font>");
+					}			
+				});				
+			})			
+		</script>
+	</head>
+	<body>
+		<h4>用户注册:</h4>
+		<!-- http://localhost:8083/WebTest/pages/users -->
+		<form action="../users" method="post">
+			<table width="565" height="169" border="1" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="108">用户名:</td>
+    <td width="428"><input type="text" name="username" id="usn" /><span id="usnspan"><font color="red">*</font></span></td>
+    <td width="21">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>密码:</td>
+    <td><input type="password" name="pwd" /></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Sex</td>
+    <td><input type="radio" name="sex" value="radiobutton" />男
+	<input type="radio" name="sex" value="radiobutton" checked="checked" />女</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>兴趣:</td>
+    <td><input type="checkbox" name="checkbox" value="lan" checked="checked" />篮球
+	<input type="checkbox" name="checkbox" value="zu" />足球
+	<input type="checkbox" name="checkbox" value="pa" />排球</td>
+	
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>年级</td>
+    <td><select name="grade">
+      <option value="1">大一</option>
+      <option value="2" selected="selected">大二</option>
+      <option value="3">大三</option>
+    </select>
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>备注</td>
+    <td><textarea name="text" cols="30" rows="6"></textarea></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3" align="center"><input type="submit" name="Submit" value="提交" /></td>
+  </tr>
+</table>			
+		</form>
+	</body>
+</html>
