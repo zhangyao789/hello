@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!--
+<!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+	Mybatis核心的数据库连接参数配置文件， 配置链接数据库的参数环境 -->
+	<environments default="environment">
+		<!-- 配置其中第一个环境配置 -->
+		<environment id="environment">
+		  <!-- 配置每一个数据库链接环境的事务管理器 -->
+		  <transactionManager type="JDBC" />
+		  <!-- 配置数据源 使用缓存 -->
+		  <dataSource type="POOLED">
+		     <property name="driver" value="com.mysql.jdbc.Driver" />
+		     <property name="url" value="jdbc:mysql://127.0.0.1:3306/test?characterEncoding=gbk" />
+		     <property name="username" value="root" />
+		     <property name="password" value="" />
+		  </dataSource>
+		</environment>
+	</environments>
+<!-- 加载每一个实体类对象映射配置文件   配置都是接口 or xml 不能是 java类对象
+<mapper resource="com/java/mybatis/RolesSql.xml" />
+  <mapper class="com.java.mybatis.IUserMapper" />-->
+<mappers>
+ <mapper resource="com/zy/entity/UserSql.xml" />
+  
+  
+</mappers>
+</configuration>
